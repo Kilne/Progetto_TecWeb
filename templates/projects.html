@@ -1,0 +1,155 @@
+{% extends "index.html" %}
+
+{% block title %}
+    project page
+{% endblock %}
+
+{% block content %}
+    <!-- Greeter -->
+    <section class="section" style="padding-bottom: 1%;">
+        <div class="box has has-text-weight-medium" style="width: fit-content;">
+            Hello <strong>{{ user }}</strong> welcome to your projects page.
+        </div>
+    </section>
+    <!-- buttons -->
+    <section class="section" style="padding-top: 1%;">
+        <div id="buttons_options" class="columns is-mobile">
+            <div class="column is-offset-0 is-narrow">
+                <button id="buttons_options_create"
+                        class="button has-icons-left is-black has-text-danger-light js-modal-trigger"
+                        data-target="project_creator"
+                >
+                <span class="icon is-small">
+                    <i class="bi bi-plus-square"></i>
+                </span>
+                    <span>Create</span>
+                </button>
+            </div>
+            <div class="column is-narrow">
+                <button id="buttons_options_refresh" class="button has-icons-left is-black has-text-danger-light">
+                <span class="icon is-small">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </span>
+                    <span>Refresh</span>
+                </button>
+            </div>
+            <div class="column is-narrow">
+                <button id="buttons_options_delete" class="button has-icons-left is-black has-text-danger-light">
+                <span class="icon is-small">
+                    <i class="bi bi-x-circle"></i>
+                </span>
+                    <span>Delete</span>
+                </button>
+            </div>
+            <div class="column is-narrow">
+                <button id="buttons_options_confirm"
+                        class="button has-icons-left is-light is-outlined is-success has-text-black"
+                style="visibility: hidden">
+                <span class="icon is-small">
+                    <i class="bi bi-check-circle"></i>
+                </span>
+                    <span>Confirm</span>
+                </button>
+            </div>
+            <div class="column is-narrow">
+                <button id="buttons_options_refuse"
+                        class="button has-icons-left is-light is-outlined is-danger has-text-black"
+                style="visibility: hidden">
+                <span class="icon is-small">
+                    <i class="bi bi-x-square"></i>
+                </span>
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- projects -->
+    <div id="projects_list" class="section">
+        <h3 class="title is-bold has-text-dark">Your projects:</h3>
+        <div id="project_list_column" class="columns is-multiline">
+
+        </div>
+    </div>
+    <!-- create projects modal -->
+    <div id="project_creator" class="modal">
+        <div id="project_creator_modal_background" class="modal-background"></div>
+        <div id="project_creator_modal_content" class="modal-content">
+            <div id="project_creator_modal_content_box" class="box">
+                <div id="project_creator_modal_box_field_name" class="field">
+                    <label class="label">Project name</label>
+                    <div id="project_creator_modal_box_field_name_input" class="control">
+                        <input id="project_creator_modal_box_field_name_input_field"
+                               class="input" type="text" aria-label="Project name"
+                               placeholder="Project name"
+                        >
+                    </div>
+                </div>
+                <div id="project_creator_modal_box_field_objective" class="field">
+                    <label class="label">Objective</label>
+                    <div id="project_creator_modal_box_field_objective_input" class="control">
+                        <input id="project_creator_modal_box_field_objective_input_field"
+                               class="input" type="text" aria-label="Objective"
+                               placeholder="Objective"
+                        >
+                    </div>
+                </div>
+                <div id="project_creator_modal_box_field_goal" class="field">
+                    <label class="label">Goal</label>
+                    <div id="project_creator_modal_box_field_goal_input" class="control">
+                        <input id="project_creator_modal_box_field_goal_input_field"
+                               class="input" type="number" aria-label="Goal"
+                               placeholder="Goal"
+                        >
+                    </div>
+                </div>
+                <div id="project_creator_modal_box_field_description" class="field">
+                    <label class="label">Description</label>
+                    <div id="project_creator_modal_box_field_description_input" class="control">
+                        <input id="project_creator_modal_box_field_description_input_field"
+                               class="input" type="text" aria-label="Description"
+                               placeholder="Description"
+                        >
+                    </div>
+                </div>
+                <div id="project_creator_modal_box_field_date" class="field">
+                    <label class="label">Date</label>
+                    <div id="project_creator_modal_box_field_date_input" class="control">
+                        <input id="project_creator_modal_box_field_date_input_field"
+                               class="input" type="date" aria-label="date"
+                               placeholder="Date"
+                        >
+                    </div>
+                </div>
+                <div id="project_creator_modal_content_box_buttons" class="field is-grouped is-grouped-centered">
+
+                    <div id="project_creator_modal_box_buttons_control" class="control">
+                        <button id="project_creator_modal_content_box_buttons_control_submit"
+                            class="button is-black has-text-danger-light">
+                            Submit
+                        </button>
+                    </div>
+
+                    <div id="project_creator_modal_box_buttons_control" class="control">
+                        <button id="project_creator_modal_content_box_buttons_control_cancel"
+                            class="button is-black has-text-danger-light">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="project_creator_modal_close" class="modal-close is-large" aria-label="close"></button>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{{ url_for('static', filename='javascript/projectspage/buttoneraser.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/projectspage/datafetcher.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/projectspage/alterHomeHref.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/projectspage/projectCreator.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/projectspage/deleteProject.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/projectspage/openProject.js') }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addUserIcon.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addProjectToNavbar.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/FooterHider.js") }}"></script>
+{% endblock %}

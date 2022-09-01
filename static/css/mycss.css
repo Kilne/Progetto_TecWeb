@@ -1,0 +1,27 @@
+/* BOOTSTRAP ICONS */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+/* BODY e HTML a tutto schermo */
+html {
+  background-color: #000;
+}
+body {
+  display: flex;
+  min-height: 100vh;
+  overflow: scroll;
+  flex-direction: column;
+  background-color: blanchedalmond;
+}
+/* Main a centro schermo */
+footer {
+  margin-top: auto;
+}
+
+/* L'orologio nella navbar era blu essendo un link, fixato così magari usare un ID */
+a {
+  color: #000;
+}
+
+/* Bulma navbar hover color override */
+.navbar-item:hover {
+  background-color: hsla(44, 100%, 50%, 0.603) !important;
+}

@@ -1,0 +1,215 @@
+{% extends "index.html" %}
+
+{% block title %}
+
+    Project detail page
+
+{% endblock %}
+
+{% block content %}
+    <!-- Buttons commands -->
+    <section class="section">
+        <div class="columns is-centered">
+            <div class="column is-narrow">
+                <div class="box" style="width: fit-content">
+            <div id="Opertations_buttons" class="columns is-centered is-mobile is-multiline">
+
+                <div id="Add_complete_step" class="column is-narrow">
+                    <button id="step_completed"
+                            class="button is-black has-text-centered has-text-weight-medium has-text-warning-light">
+                        Add step completed +
+                    </button>
+                </div>
+
+
+                <div id="Remove_a_completed_step" class="column is-narrow">
+                    <button id="remove_step"
+                            class="button is-black has-text-centered has-text-weight-medium has-text-warning-light">
+                        Decrease a step completed -
+                    </button>
+                </div>
+
+                <div id="edit" class="column is-narrow">
+                    <button id="edit_button"
+                            class="button is-black has-text-centered has-text-weight-medium has-text-warning-light">
+                        Edit the project
+                    </button>
+                </div>
+            </div>
+            <div id="operations_result" class="columns is-hidden is-centered is-mobile">
+                <div class="column is-narrow">
+                    <button id="buttons_options_confirm"
+                            class="button has-icons-left is-light is-outlined is-success has-text-black">
+                        <span class="icon is-small">
+                            <i class="bi bi-check-circle"></i>
+                        </span>
+                        <span>Confirm</span>
+                    </button>
+                </div>
+                <div class="column is-narrow">
+                    <button id="buttons_options_refuse"
+                            class="button has-icons-left is-light is-outlined is-danger has-text-black">
+                        <span class="icon is-small">
+                            <i class="bi bi-x-square"></i>
+                        </span>
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Project detail -->
+    <section class="section">
+        <div class="box">
+            <div id="p_name" class="has-text-centered has-text-weight-medium ">
+                <h2><strong>Project Name:</strong></h2>
+                <p></p>
+            </div>
+
+            <div id="basic_info" class="columns">
+
+                <div id="obj" class="column is-6 has-text-centered has-text-weight-medium ">
+                    <h2><strong>Objective:</strong></h2>
+                    <p></p>
+                </div>
+
+                <div id="description"
+                     class="column is-6 has-text-centered has-text-weight-medium">
+                    <h2><strong>Desciption:</strong></h2>
+                    <p></p>
+                </div>
+
+            </div>
+
+            <div id="details" class="columns">
+                <div id="goal" class="column has-text-weight-medium has-text-centered is-3">
+                    <h2><strong>Goal:</strong></h2>
+                    <p></p>
+                </div>
+
+                <div id="num_steps_total" class="column has-text-weight-medium has-text-centered is-3">
+                    <h2><strong>Steps total:</strong></h2>
+                    <p></p>
+                </div>
+
+                <div id="num_steps_completed" class="column has-text-weight-medium has-text-centered is-3">
+                    <h2><strong>Steps completed:</strong></h2>
+                    <p></p>
+                </div>
+
+                <div id="single_step_value" class="column has-text-weight-medium has-text-centered is-3">
+                    <h2><strong>Step value:</strong></h2>
+                    <p></p>
+                </div>
+            </div>
+
+            <div id="time" class="columns">
+                <div id="due_date" class="column has-text-weight-medium has-text-centered is-6">
+                    <h2><strong>Date due:</strong></h2>
+                    <p></p>
+                </div>
+
+                <div id="time_left" class="column has-text-weight-medium has-text-centered is-6">
+                    <h2><strong>Days remaining:</strong></h2>
+                    <p></p>
+                </div>
+
+            </div>
+
+            <div>
+                <progress id="progress" class="progress is-dark" value="0" max="100"></progress>
+                <div id="perc_compl" class="subtitle has-text-centered has-text-weight-medium"></div>
+            </div>
+            <div id="p_id" style="visibility: hidden"></div>
+        </div>
+    </section>
+
+    <!-- Edit Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Project name
+                            <input id="p_name_edit"
+                                   class="input" type="text" placeholder="Project name" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Objective
+                            <input id="obj_edit"
+                                   class="input" type="text" placeholder="Objective" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Description
+                            <input id="description_edit"
+                                   class="input" type="text" placeholder="Description" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Goal
+                            <input id="goal_edit"
+                                   class="input" type="number" placeholder="Goal" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Date due
+                            <input id="due_date_edit" class="input" type="date" placeholder="Date" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Steps
+                            <input id="num_steps_total_edit"
+                                   class="input" type="number" placeholder="Steps total" value="">
+                        </label>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <div class="control">
+                        <button id="submit_changes"
+                                class="button has-text-warning-light has-text-weight-medium is-black">
+                            Submit changes
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button id="cancel_changes"
+                                class="button has-text-warning-light has-text-weight-medium is-black">
+                            Cancel changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+
+{% endblock %}
+
+{% block custom_js %}
+
+    <script src="{{ url_for('static', filename="javascript/projectspage/buttoneraser.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/projectDetails/getTheDetails.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/projectDetails/stepsOperations.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/projectDetails/editProject.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addProjectToNavbar.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/FooterHider.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addUserIcon.js") }}"></script>
+
+{% endblock %}

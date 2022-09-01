@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            rel="icon"
+            type="image/x-icon"
+            href="../static/Icons/32px-Antu_alarm-clock.svg.png"
+    />
+    <!-- BULMA CSS AND MY CSS -->
+    <link rel="stylesheet" href="../static/css/bulma.css"/>
+    <link rel="stylesheet" href="../static/css/mycss.css"/>
+    <!-- PWA  -->
+    <link rel="manifest" href="../static/PWA/manifest.json"/>
+    <!-- TITLE BLOCK -->
+    <title>{% block title %} Homepage {% endblock %}</title>
+
+    {% block head %} {% endblock %}
+</head>
+<body>
+<header>
+    <!-- NAVBAR -->
+
+    <nav
+            id="tapp_nav"
+            class="navbar is-warning"
+            role="navigation"
+            aria-label="navigation"
+    >
+        <nav id="tapp_nav_brand" class="navbar-brand" aria-label="TAPP LOGO">
+            <a
+                    id="tapp_nav_brand_item"
+                    class="navbar-item has-text-black has-text-weight-medium has is-size-5-desktop"
+                    href="/home"
+            >
+                <i class="bi bi-alarm-fill"></i> TIME IS APP
+            </a>
+            <a
+                    role="button"
+                    class="navbar-burger"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="tapp_nav_items"
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </nav>
+        <div id="tapp_nav_items" class="navbar-menu">
+            <div id="tapp_nav_items_menu_start" class="navbar-start">
+                <div id="tapp_nav_items_menu_start_first" class="navbar-item">
+                    <a
+                            id="tapp_nav_brand_items_menu_home"
+                            class="navbar-item has-text-black has-text-weight-medium is-size-5-desktop"
+                            href="/home"
+                    >
+                        Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="tapp_nav_items_menu_end" class="navbar-end">
+            <div id="tapp_nav_items_menu_end_buttons" class="navbar-item">
+                <div class="buttons">
+                    <button
+                            class="button js-modal-trigger is-black has-text-warning-light"
+                            data-target="modal_signup"
+                    >
+                        <strong>Sign up</strong>
+                    </button>
+                    <button
+                            class="button js-modal-trigger is-black has-text-warning-light"
+                            data-target="modal_login"
+                    >
+                        <strong>Log in</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header block -->
+    {% block header %}{% endblock %}
+</header>
+<!-- BODY block -->
+{% block content %}
+    <!-- Greeter -->
+    <div class="section">
+        <div id="Main greeting" class="columns">
+            <div
+                    id="column_box"
+                    class="column is-centered is-mobile is-half-tablet is-offset-one-quarter-tablet"
+            >
+                <div id="column_box_item" class="box">
+                    <div
+                            id="column_box_title"
+                            class="title has-text-centered-tablet has-text-black has-text-weight-medium"
+                    >
+                        Welcome to Time is App, try us and save some time.
+                    </div>
+                    <div
+                            id="column_box_item_columns"
+                            class="columns is-mobile is-centered"
+                    >
+                        <div id="column_box_item_columns_item_sign_up" class="column is-narrow">
+                            <button
+                                    id="column_box_item_columns_item_button_signup"
+                                    class="button js-modal-trigger has-background-warning has-text-black
+                                     has-text-weight-medium"
+                                    data-target="modal_signup"
+                            >
+                                Sign up
+                            </button>
+                        </div>
+                        <div id="column_box_item_columns_item_login" class="column is-narrow">
+                            <button
+                                    id="column_box_item_columns_item_button_login"
+                                    class="button js-modal-trigger has-background-warning
+                                     has-text-black has-text-weight-medium"
+                                    data-target="modal_login"
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal_login -->
+    <div id="modal_login" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div id="modal_login_box" class="box">
+                <div class="block">
+                    <strong>Please insert your credentials:</strong>
+                </div>
+
+                <div id="modal_login_box_user_field" class="field">
+                    <label class="label">Username</label>
+                    <div
+                            id="modal_login_box_user_field_user"
+                            class="control has-icons-left"
+                    >
+                        <label for="modal_login_box_username_field_user_input"></label><input
+                            id="modal_login_box_username_field_user_input"
+                            class="input"
+                            type="text"
+                            placeholder="Username"
+                    />
+                        <span class="icon is-small is-left">
+                <i class="bi bi-person-badge-fill"></i>
+              </span>
+                    </div>
+                </div>
+                <div id="modal_login_box_password_field" class="field">
+                    <label class="label">Password</label>
+                    <div
+                            id="modal_login_box_password_field_password"
+                            class="control has-icons-left"
+                    >
+                        <label for="modal_login_box_password_field_password_input"></label><input
+                            id="modal_login_box_password_field_password_input"
+                            class="input"
+                            type="password"
+                            placeholder="Password"
+                    />
+                        <span class="icon is-small is-left">
+                <i class="bi bi-lock-fill"></i>
+              </span>
+                    </div>
+                </div>
+                <div id="modal_login_box_submit_field" class="field">
+                    <div
+                            id="modal_login_box_submit_field_submit"
+                            class="control has-text-centered"
+                    >
+                        <button
+                                id="modal_login_box_submit_field_submit_button"
+                                class="button is-black"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <!-- modal signup -->
+    <div id="modal_signup" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div id="modal_signup_box" class="box">
+                <div class="block">
+                    <strong>Please fill the following form:</strong>
+                </div>
+
+                <div id="modal_signup_box_email_field" class="field">
+                    <label class="label">Email:</label>
+                    <div
+                            id="modal_signup_box_email_field_email"
+                            class="control has-icons-left"
+                    >
+                        <label for="modal_signup_box_email_field_email_input"></label><input
+                            id="modal_signup_box_email_field_email_input"
+                            class="input"
+                            type="email"
+                            placeholder="yourmail@provider.domain"
+                    />
+                        <span class="icon is-small is-left">
+                <i class="bi bi-envelope-fill"></i>
+              </span>
+                    </div>
+                </div>
+
+                <div id="modal_signup_box_user_field" class="field">
+                    <label class="label">Username:</label>
+                    <div
+                            id="modal_signup_box_user_field_user"
+                            class="control has-icons-left"
+                    >
+                        <label for="modal_signup_box_user_field_user_input"></label><input
+                            id="modal_signup_box_user_field_user_input"
+                            class="input"
+                            type="text"
+                            placeholder="Myusername"
+                    />
+                        <span class="icon is-small is-left">
+                <i class="bi bi-person-badge-fill"></i>
+              </span>
+                    </div>
+                </div>
+
+                <div id="modal_signup_box_password_field" class="field">
+                    <label class="label">Password:</label>
+                    <div
+                            id="modal_signup_box_password_field_password"
+                            class="control has-icons-left"
+                    >
+                        <label for="modal_signup_box_password_field_password_input"></label><input
+                            id="modal_signup_box_password_field_password_input"
+                            class="input"
+                            type="password"
+                            placeholder="Mypassword"
+                    />
+                        <span class="icon is-small is-left">
+                <i class="bi bi-lock-fill"></i>
+              </span>
+                    </div>
+                </div>
+
+                <div id="modal_signup_box_submit_field" class="field">
+                    <div
+                            id="modal_signup_box_submit_field_submit"
+                            class="control has-text-centered"
+                    >
+                        <button
+                                id="modal_signup_box_submit_field_submit_button"
+                                class="button is-black"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+{% endblock %}
+<footer id="footer" class="footer has-background-warning-light">
+    <!-- Footer block -->
+    <div class="columns">
+        <div
+                class="column has-text-centered-tablet has-text-black has has-text-weight-medium"
+        >
+            <div class="block">
+                <div class="Title is-5">
+                    A TecWeb project for Università degli Studi di Napoli
+                    Uniparthenope made by:
+                </div>
+            </div>
+            <div class="block">
+                <div class="subtitle">Luca Maiuri and Christian Porritiello</div>
+            </div>
+        </div>
+        <div
+                class="column has-text-centered-tablet has-text-black has has-text-weight-medium"
+        >
+            <div
+                    class="block has-text-black has-text-centered-tablet has-text-weight-medium"
+            >
+                Made with:
+            </div>
+            <div class="columns is-centered is-multiline is-mobile">
+                <div class="column is-narrow">
+                    <a
+                            role="button"
+                            class="button is-black has-text-success has-text-centered
+                            has-text-weight-medium"
+                            href="https://bulma.io/"
+                    >
+                        BULMA.io CSS
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a
+                            role="button"
+                            class="button is-black has-text-centered
+                            has-text-weight-medium"
+                            href="https://icons.getbootstrap.com/"
+                            style="color:mediumpurple"
+                    >
+                        <figure class="image is-32x32 mr-1">
+                            <img src="../static/Icons/bootstrapIco.png" alt="Immagine">
+                        </figure>
+                        Bootstrap Icons
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a
+                            role="button"
+                            class="button is-black has-text-primary-light has-text-centered has-text-weight-medium"
+                            href="https://www.mongodb.com//"
+                    >
+                        <figure class="image is-32x32">
+                            <img src="../static/Icons/file_type_mongo_icon_130383.png" alt="Immagine"/>
+                        </figure>
+                        Mongo DB Atlas
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a
+                            role="button"
+                            class="button is-black has-text-info-light has-text-centered has-text-weight-medium"
+                            href="https://www.typescriptlang.org/"
+                    >
+                        <figure class="image is-32x32 mr-1">
+                            <img
+                                    src="../static/Icons/file_type_typescript_official_icon_130107.png" alt="Immagine"
+                            />
+                        </figure>
+                        TypesScript
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block footer %} {% endblock %}
+</footer>
+</body>
+<!-- //CUSTOM JS SCRIPTS// -->
+<!-- navbar collapse script -->
+<script src="{{ url_for('static', filename='javascript/navbar/menucollpase.js') }}"></script>
+{% block custom_js %}
+    <!-- Modal activator -->
+    <script src="{{ url_for('static', filename='javascript/login_signup/login_signup_modal_activator.js') }}"></script>
+    <!-- Modal login and signup field catchers -->
+    <script src="{{ url_for('static', filename='javascript/login_signup/login_modal_operation.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/login_signup/signup_modal_operation.js') }}" type="module">
+    </script>
+    <script src="{{ url_for('static', filename='javascript/login_signup/regcheker.js') }}" type="module"></script>
+    <script src="{{ url_for('static', filename='PWA/app.js') }}"></script>
+
+
+    <!-- -------------------------------- -->
+{% endblock %}
+</html>

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "allowJs": true,
+    "sourceMap": false,
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "outDir": "static/javascript/"
+  },
+  "include": [
+    "Typescript/**/*.ts"
+  ]
+}

@@ -1,0 +1,126 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Userpage
+{% endblock %}
+
+{% block content %}
+    <div class="section p-4">
+        <div id="greeter_box" class="box" style="width: fit-content">
+            <p class="has-text-weight-medium has-text-black">
+                Hi
+                <strong>
+                    {{ user }}
+                </strong>
+                , this is your user panel.
+            </p>
+        </div>
+
+        <div id="forms" class="box" style="width: fit-content">
+            <p class="mb-1">
+                Change your user details here:
+            </p>
+            <div class="field has-addons">
+                <div class="control">
+                    <button id="change_password" class="button is-black has-text-warning-light">
+                        Change Password
+                    </button>
+                </div>
+                <div>
+                    <input id="password_input"
+                           type="password" class="input" placeholder="New Password" aria-label="New Password" disabled>
+                </div>
+            </div>
+
+            <div class="field has-addons">
+                <div class="control">
+                    <button id="change_email" class="button is-black has-text-warning-light">
+                        Change Email
+                    </button>
+                </div>
+                <div>
+                    <input id="email_input"
+                           type="text" class="input" placeholder="New Email" aria-label="New Email" disabled>
+                </div>
+            </div>
+
+            <div class="field has-addons">
+                <div class="control">
+                    <button id="change_username" class="button is-black has-text-warning-light">
+                        Change Username
+                    </button>
+                </div>
+                <div>
+                    <input id="username_input"
+                           type="text" class="input" placeholder="New Username" aria-label="New User" disabled>
+                </div>
+            </div>
+            <div id="confirmation_modify_buttons" class="columns is-centered is-hidden">
+                <div class="column is-narrow">
+                    <button id="confirm_modify_button"
+                            class="button is-light is-success has-text-centered has-text-weight-medium">
+                        Confirm
+                        <span class="icon is-small ml-1">
+                            <i class="bi bi-check-lg"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="column is-narrow">
+                    <button id="cancel_modify_button"
+                            class="button is-light is-danger has-text-centered has-text-weight-medium">
+                        Cancel
+                        <span class="icon is-small ml-1">
+                            <i class="bi bi-x-lg"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box has-text-centered" style="width: fit-content">
+            <p>
+                <strong>
+                    Danger Zone
+                </strong>
+            </p>
+            <div class="columns is-centered">
+                <div class="column">
+                    <button id="delete_button" class="button has-text-warning-light is-black">
+                        Delete your account
+                    </button>
+                </div>
+            </div>
+            <div id="confirmation_buttons" class="columns is-centered is-hidden">
+                <div class="column is-narrow">
+                    <button id="confirm_button"
+                            class="button is-light is-success has-text-centered has-text-weight-medium">
+                        Confirm
+                        <span class="icon is-small ml-1">
+                            <i class="bi bi-check-lg"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="column is-narrow">
+                    <button id="cancel_button"
+                            class="button is-light is-danger has-text-centered has-text-weight-medium">
+                        Cancel
+                        <span class="icon is-small ml-1">
+                            <i class="bi bi-x-lg"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{{ url_for('static', filename="javascript/projectspage/buttoneraser.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addUserIcon.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addProjectToNavbar.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/FooterHider.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/userpage/deleteUser.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/userpage/modifyUserDetails.js") }}" type="module"></script>
+    <script src="{{ url_for('static', filename='javascript/login_signup/regcheker.js') }}" type="module"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}
+
+    Logged in page
+
+{% endblock %}
+
+{% block custom_js %}
+
+    <script src="{{ url_for('static', filename="javascript/projectspage/buttoneraser.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/indexChanger.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addUserIcon.js") }}"></script>
+    <script src="{{ url_for('static', filename="javascript/index/addProjectToNavbar.js") }}"></script>
+
+{% endblock %}
