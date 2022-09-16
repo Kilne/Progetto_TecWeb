@@ -8,9 +8,17 @@ mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
 def login_mobile():
     if request.method == 'POST':
 
-        return "logged in", 200
+        user, psw = request.get_json()
+
+        print(user, psw)
+
+        if log_in_user(user, psw):
+
+            return "logged in", 200
+        else:
+            return "Unauthorized", 401
     else:
-        return "Unauthorized", 401
+        return "Bad request", 400
 
 
 @mobile_bp.route('/logout', methods=['GET'])
@@ -20,4 +28,4 @@ def logout_mobile():
         session.clear()
         return "Logged Out", 200
     else:
-        return "Unauthorized", 401
+        return "bad request", 400
