@@ -8,6 +8,7 @@ from dotenv import load_dotenv, find_dotenv
 from flask import Flask, render_template, session, request, url_for, jsonify, redirect
 from flask_cors import cross_origin
 
+from backend.application.mobile.mobile_blueprints import mobile_bp
 from backend.application.checkIfLogged import check_if_already_logged_in
 from backend.application.log_in_user import log_in_user
 from backend.application.registerUser import register_user
@@ -24,6 +25,7 @@ load_dotenv(find_dotenv())
 mimetypes.add_type('text/javascript', '.js')
 # FLASK APP
 app = Flask(__name__)
+app.register_blueprint(mobile_bp)
 # CORS
 cross_origin(app)
 # Session lifetime and key
