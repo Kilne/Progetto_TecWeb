@@ -1,4 +1,4 @@
-from flask import Blueprint, session, request
+from flask import Blueprint, session, request, json
 from backend.application.log_in_user import log_in_user
 
 mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
@@ -8,24 +8,24 @@ mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
 def login_mobile():
     if request.method == 'POST':
 
-        user, psw = request.get_json()
+        mobile_data = request.get_json()
 
-        print(user, psw)
-
-        if log_in_user(user, psw):
-
-            return "logged in", 200
+        if log_in_user(mobile_data["username"], mobile_data["password"]):
+            session["username"] = mobile_data["username"]
+            return json.jsonify({
+                "username": session["username"],
+                "projects": session["user_projects"]
+            }), 200
         else:
-            return "Unauthorized", 401
+            return json.jsonify({"status": False}), 401
     else:
-        return "Bad request", 400
+        return json.jsonify({"status": False}), 400
 
 
 @mobile_bp.route('/logout', methods=['GET'])
 def logout_mobile():
     if request.method == 'GET':
-        print(request.headers)
         session.clear()
-        return "Logged Out", 200
+        return json.jsonify({"status": True}), 200
     else:
-        return "bad request", 400
+        return json.jsonify({"status": False}), 400
