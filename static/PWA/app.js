@@ -1,10 +1,17 @@
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register("./sw.js", { scope: '/' })
-        .then(registration => {
-        console.log("ServiceWorker running");
-    })
-        .catch(err => {
-        console.log(err);
-    });
+window.onload = () => {
+    'use strict';
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./sw.js',{scope:"/"}).then(function (registration) {
+
+                // Service worker registered correctly.
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            },
+            function (err) {
+
+                // Troubles in registering the service worker. :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    }
 }

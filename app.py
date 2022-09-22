@@ -5,7 +5,8 @@ from typing import Any
 
 import werkzeug.exceptions
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask, render_template, session, request, url_for, jsonify, redirect
+from flask import Flask, render_template, session, request, url_for, jsonify, redirect, make_response, \
+    send_from_directory
 from flask_cors import cross_origin
 
 from backend.application.mobile.mobile_blueprints import mobile_bp
@@ -360,7 +361,10 @@ def update_user():
 
 @app.route("/sw.js", methods=["GET"])
 def sw():
-    return app.send_static_file('sw.js')
+    res = make_response(send_from_directory("static", "./PWA/sw.js"))
+    res.headers["Content-Type"] = "application/javascript"
+    res.headers.add("Service-Worker-Allowed", "/")
+    return res
 
 
 if __name__ == '__main__':
