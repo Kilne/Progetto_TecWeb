@@ -1,7 +1,6 @@
 import pymongo.errors
 
 from backend.database.connection import operation_connection
-from backend.database.orm import User
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from backend.application.hashing import hash_credentials
@@ -47,14 +46,15 @@ def user_insert(username: str, password: str, email: str) -> bool:
 
         hashed_data = hash_credentials(username, password, email)
 
-        new_user = User(
-            username=hashed_data.get("username_hashed"),
-            password=hashed_data.get("password_hashed"),
-            email=hashed_data.get("hashed_email")
-        )
+        new_user = {
+            "username": hashed_data.get("username_hashed"),
+            "password": hashed_data.get("password_hashed"),
+            "email": hashed_data.get("hashed_email"),
+            "user_projects": []
+        }
 
         if connection_obj.get("collection").insert_one(
-                new_user.build_dict()
+                new_user
         ).acknowledged:
             connection_obj.get("client").close()
             return True
