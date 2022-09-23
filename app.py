@@ -30,6 +30,7 @@ app.register_blueprint(mobile_bp)
 # CORS
 cross_origin(app)
 # Session lifetime and key
+app.config["SESSION_TYPE"] = 'filesystem'
 app.secret_key = os.getenv("SECRET_KEY")
 
 
