@@ -367,6 +367,21 @@ def sw():
     return res
 
 
+@app.route("/css/bulma.css", methods=["GET"])
+def bulma():
+    return make_response(send_from_directory("static", "./css/bulma.css"))
+
+
+@app.route("/css/bulma-rtl.css", methods=["GET"])
+def bulma_rtl():
+    return make_response(send_from_directory("static", "./css/bulma-rtl.css"))
+
+
+@app.route("/css/mycss.css", methods=["GET"])
+def mycss():
+    return make_response(send_from_directory("static", "./css/mycss.css"))
+
+
 if __name__ == '__main__':
     app.run(
         host='localhost',
