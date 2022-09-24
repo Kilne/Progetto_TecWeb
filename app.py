@@ -26,7 +26,11 @@ load_dotenv(find_dotenv())
 mimetypes.add_type('text/javascript', '.js')
 # FLASK APP
 app = Flask(__name__)
-
+app.register_blueprint(mobile_bp)
+# CORS
+cross_origin(app)
+# Session lifetime and key
+app.secret_key = os.getenv("SECRET_KEY")
 
 
 # SESSION REFRESH
@@ -379,10 +383,4 @@ def mycss():
 
 
 if __name__ == '__main__':
-    app.register_blueprint(mobile_bp)
-    # CORS
-    cross_origin(app)
-    # Session lifetime and key
-    app.config["SESSION_TYPE"] = 'filesystem'
-    app.secret_key = os.getenv("SECRET_KEY")
     app.run()
