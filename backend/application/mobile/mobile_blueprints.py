@@ -3,6 +3,7 @@ import os
 from flask import Blueprint, session, request, json
 from backend.application.log_in_user import log_in_user
 from backend.application.registerUser import register_user
+from backend.database.Operations.getProjects import get_projects
 
 mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
 
@@ -65,5 +66,21 @@ def register_mobile():
         else:
             return json.jsonify({"status": False}), 401
 
+    else:
+        return json.jsonify({"status": False}), 400
+
+@mobile_bp.route("/get_project", methods=["POST"])
+def getProjects():
+    if request.method == "POST":
+        data_of_requester = request.get_json()
+        try:
+            if data_of_requester["session_id"] == session["session_id"]:
+                session["user_projects"] = get_projects(session["id"])
+                if len(session["user_projects"]) == 0:
+                    return json.jsonify({"user_projects": []}), 200
+                else:
+                    return json.jsonify({"user_projects": session["user_projects"]}), 200
+        except KeyError:
+            return json.jsonify({"status": False}), 401
     else:
         return json.jsonify({"status": False}), 400
