@@ -130,9 +130,11 @@ def delete_a_project():
     if request.method == "POST":
         if check_if_already_logged_in():
             try:
-                the_project_to_delete: dict[str, list[str]] = request.get_json()
+                the_project_to_delete: dict[str,
+                                            list[str]] = request.get_json()
 
-                total_projects_to_delete = len(the_project_to_delete["project_id"])
+                total_projects_to_delete = len(
+                    the_project_to_delete["project_id"])
 
                 projects_deleted = 0
 
@@ -226,7 +228,8 @@ def update_a_project():
 
                     for elements in user_proj:
                         if elements["p_id"] == the_project_to_update["updated_project"]["p_id"]:
-                            user_proj[user_proj.index(elements)] = the_project_to_update["updated_project"]
+                            user_proj[user_proj.index(
+                                elements)] = the_project_to_update["updated_project"]
                             session["user_projects"] = user_proj
                             break
 
