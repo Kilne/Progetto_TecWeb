@@ -13,30 +13,27 @@ def login_mobile():
     if request.method == 'POST':
 
         mobile_data = request.get_json()
-        try:
-            if mobile_data["session_id"] == session["session_id"]:
-                return json.jsonify({"status": "success"}), 204
-        except KeyError:
-            if log_in_user(mobile_data["username"], mobile_data["password"]):
-                session["session_id"] = os.urandom(24).hex()
-                if len(session["user_projects"]) == 0:
-                    return json.jsonify(
-                        {
-                            "id": session["id"],
-                            "username": session["username"],
-                            "user_projects": [],
-                            "session_id": session["session_id"]
-                        }
-                    ), 200
-                else:
-                    return json.jsonify({
+        
+        if log_in_user(mobile_data["username"], mobile_data["password"]):
+            session["session_id"] = os.urandom(24).hex()
+            if len(session["user_projects"]) == 0:
+                return json.jsonify(
+                    {
                         "id": session["id"],
                         "username": session["username"],
-                        "user_projects": session["user_projects"],
+                        "user_projects": [],
                         "session_id": session["session_id"]
-                    }), 200
+                    }
+                ), 200
             else:
-                return json.jsonify({"status": False}), 401
+                return json.jsonify({
+                    "id": session["id"],
+                    "username": session["username"],
+                    "user_projects": session["user_projects"],
+                    "session_id": session["session_id"]
+                }), 200
+        else:
+            return json.jsonify({"status": False}), 401
     else:
         return json.jsonify({"status": False}), 400
 
@@ -80,6 +77,19 @@ def getProjects():
                     return json.jsonify({"user_projects": []}), 200
                 else:
                     return json.jsonify({"user_projects": session["user_projects"]}), 200
+        except KeyError:
+            return json.jsonify({"status": False}), 401
+    else:
+        return json.jsonify({"status": False}), 400
+    
+
+@mobile_bp.route("/check_login", methods=["POST"])
+def check_login():
+    if request.method == "POST":
+        data_of_requester = request.get_json()
+        try:
+            if data_of_requester["session_id"] == session["session_id"]:
+                return json.jsonify({"status": True}), 200
         except KeyError:
             return json.jsonify({"status": False}), 401
     else:
