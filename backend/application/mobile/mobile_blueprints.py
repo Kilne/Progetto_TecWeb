@@ -1,11 +1,21 @@
-from datetime import datetime
 import os
-from flask import Blueprint, session, request, json
+from flask import Blueprint, session, request, json, make_response
 from backend.application.log_in_user import log_in_user
 from backend.application.registerUser import register_user
+from backend.database.Operations.addProject import create_new_project_for_user
+from backend.database.Operations.deleteAProject import delete_project
 from backend.database.Operations.getProjects import get_projects
+from backend.database.Operations.updateProject import update_project
 
 mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
+
+
+@mobile_bp.route("/ping_me", methods=['GET'])
+def ping():
+    if request.method == 'GET':
+        return make_response(json.jsonify({'message': 'pong'}), 200)
+    else:
+        return make_response(json.jsonify({'message': 'Go away'}), 401)
 
 
 @mobile_bp.route('/login', methods=['POST'])
@@ -13,7 +23,7 @@ def login_mobile():
     if request.method == 'POST':
 
         mobile_data = request.get_json()
-        
+
         if log_in_user(mobile_data["username"], mobile_data["password"]):
             session["session_id"] = os.urandom(24).hex()
             if len(session["user_projects"]) == 0:
@@ -26,6 +36,7 @@ def login_mobile():
                     }
                 ), 200
             else:
+
                 return json.jsonify({
                     "id": session["id"],
                     "username": session["username"],
@@ -66,8 +77,9 @@ def register_mobile():
     else:
         return json.jsonify({"status": False}), 400
 
+
 @mobile_bp.route("/get_project", methods=["POST"])
-def getProjects():
+def get_user_projects():
     if request.method == "POST":
         data_of_requester = request.get_json()
         try:
@@ -81,15 +93,85 @@ def getProjects():
             return json.jsonify({"status": False}), 401
     else:
         return json.jsonify({"status": False}), 400
-    
 
-@mobile_bp.route("/check_login", methods=["POST"])
-def check_login():
+
+@mobile_bp.route("/delete_projects", methods=["POST"])
+def modify_project():
     if request.method == "POST":
         data_of_requester = request.get_json()
+
+        all_completed = True
+        completed_dict: dict[str, bool] = {}
+
         try:
             if data_of_requester["session_id"] == session["session_id"]:
-                return json.jsonify({"status": True}), 200
+
+                for ids in data_of_requester["project_ids"]:
+                    completed_dict[ids] = delete_project(ids)
+
+                if False in completed_dict.values():
+                    all_completed = False
+
+                for id, comp in completed_dict.items():
+                    if comp:
+                        for project in session["user_projects"]:
+                            if project["p_id"] == id:
+                                session["user_projects"].remove(project)
+
+                if all_completed:
+                    return json.jsonify({"status": True}), 200
+                else:
+                    return json.jsonify({"status": False, "completed_dict": completed_dict}), 200
+
+        except KeyError:
+            return json.jsonify({"status": False}), 401
+    else:
+        return json.jsonify({"status": False}), 400
+
+
+@mobile_bp.route("/add_a_project", methods=["POST"])
+def add_project_to_user():
+    if request.method == "POST":
+        data_of_requester = request.get_json()
+
+        try:
+            if data_of_requester["session_id"] == session["session_id"]:
+                if create_new_project_for_user(session["id"], data_of_requester["new_project"]):
+                    session["user_projects"].append(
+                        data_of_requester["new_project"])
+                    return json.jsonify({"status": True}), 200
+                else:
+                    return json.jsonify({"status": False}), 200
+            else:
+                return json.jsonify({"status": False}), 401
+        except KeyError:
+            return json.jsonify({"status": False}), 401
+    else:
+        return json.jsonify({"status": False}), 400
+
+
+@mobile_bp.route("/modify_project", methods=["POST"])
+def modify_exisiting_project():
+    if request.method == "POST":
+        data_of_requester = request.get_json()
+
+        try:
+            if data_of_requester["session_id"] == session["session_id"]:
+
+                if (update_project(
+                    data_of_requester["modified_project"]["p_id"],
+                        data_of_requester["modified_project"])):
+
+                    for project in session["user_projects"]:
+                        if project["p_id"] == data_of_requester["modified_project"]["p_id"]:
+                            session["user_projects"].remove(project)
+                            session["user_projects"].append(
+                                data_of_requester["modified_project"])
+                    return json.jsonify({"status": True}), 200
+
+            else:
+                return json.jsonify({"status": False}), 401
+
         except KeyError:
             return json.jsonify({"status": False}), 401
     else:
