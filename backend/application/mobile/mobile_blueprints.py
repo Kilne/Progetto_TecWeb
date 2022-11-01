@@ -5,6 +5,7 @@ from backend.application.registerUser import register_user
 from backend.database.Operations.addProject import create_new_project_for_user
 from backend.database.Operations.deleteAProject import delete_project
 from backend.database.Operations.getProjects import get_projects
+from backend.database.Operations.modifyUserDetails import modify_email, modify_password, modify_username
 from backend.database.Operations.updateProject import update_project
 
 mobile_bp = Blueprint('mobile_bp', __name__, url_prefix='/mobile')
@@ -156,11 +157,15 @@ def modify_exisiting_project():
         data_of_requester = request.get_json()
 
         try:
+
             if data_of_requester["session_id"] == session["session_id"]:
 
-                if (update_project(
-                    data_of_requester["modified_project"]["p_id"],
-                        data_of_requester["modified_project"])):
+                if (
+                    update_project(
+                        session["id"],
+                        data_of_requester["modified_project"]
+                    )
+                ):
 
                     for project in session["user_projects"]:
                         if project["p_id"] == data_of_requester["modified_project"]["p_id"]:
@@ -168,11 +173,53 @@ def modify_exisiting_project():
                             session["user_projects"].append(
                                 data_of_requester["modified_project"])
                     return json.jsonify({"status": True}), 200
+                else:
+                    return json.jsonify({"status": False}), 200
+
+            else:
+
+                return json.jsonify({"status": False}), 401
+
+        except KeyError:
+
+            return json.jsonify({"status": False}), 401
+    else:
+        return json.jsonify({"status": False}), 400
+
+
+@mobile_bp.route("/modify_user_details", methods=["POST"])
+def modify_details():
+    if request.method == "POST":
+
+        user_request: dict[str, str] = request.get_json()
+
+        try:
+            if user_request["session_id"] == session["session_id"]:
+
+                successful_changes: dict[str, bool] = {}
+
+                for key in user_request.keys():
+                    match key:
+                        case "username":
+                            if user_request[key] != "":
+                                successful_changes[key] = modify_username(
+                                    session["id"], user_request[key])
+                        case "email":
+                            if user_request[key] != "":
+                                successful_changes[key] = modify_email(
+                                    session["id"], user_request[key])
+                        case "password":
+                            if user_request[key] != "":
+                                successful_changes[key] = modify_password(
+                                    session["id"], user_request[key])
+
+                return json.jsonify(successful_changes), 200
 
             else:
                 return json.jsonify({"status": False}), 401
 
         except KeyError:
             return json.jsonify({"status": False}), 401
+
     else:
         return json.jsonify({"status": False}), 400
